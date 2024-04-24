@@ -7,10 +7,6 @@ export type UsernameProps = {
 };
 
 export default function Username(props: UsernameProps) {
-  const onUsernameChange = (e: any) => {
-    props.onChange(e.target.value);
-  };
-
   return (
     <div className="w-full flex items-center font-bold h-16 text-lg rounded-lg text-white">
       <span className="h-full flex-1 flex justify-center items-center bg-white/10 rounded-s-lg">
@@ -29,7 +25,7 @@ export default function Username(props: UsernameProps) {
           placeholder="Username"
           required
           debounceTimeout={500}
-          onChange={onUsernameChange}
+          onChange={(e) => props.onChange(e.target.value)}
         />
       </div>
     </div>

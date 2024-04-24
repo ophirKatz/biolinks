@@ -3,26 +3,43 @@
 import React, { useState } from "react";
 import { SubmitButton } from "../../../components/forms/SubmitButton";
 import CoverPhotos from "./CoverPhotos";
-import Channels from "./Channel";
-import Tabs from "./Tab";
+import Channels from "./Channels";
+import Tabs from "./Tabs";
 import Username from "./Username";
-import submitProfileForm from "../submit-action";
+import submitProfileForm from "../submit-profile-form";
+import { DebounceInput } from "react-debounce-input";
 
 export type ProfileFormData = {
   username: string;
   title: string;
+  description: string;
 };
 
 export default function ProfileForm() {
   const [profileForm, setProfileForm] = useState<ProfileFormData>({
     username: "",
     title: "",
+    description: "",
   });
 
-  const onUsernameChange = (value: string) => {
+  const onUsernameChange = (username: string) => {
     setProfileForm({
       ...profileForm,
-      username: value,
+      username,
+    });
+  };
+
+  const onTitleChange = (title: string) => {
+    setProfileForm({
+      ...profileForm,
+      title,
+    });
+  };
+
+  const onDescriptionChange = (description: string) => {
+    setProfileForm({
+      ...profileForm,
+      description,
     });
   };
 
@@ -34,18 +51,23 @@ export default function ProfileForm() {
         <Username onChange={onUsernameChange} />
 
         <label className="text-md mt-2">Bio</label>
-        <input
+        <DebounceInput
           className="bg-white/10 rounded-lg flex items-center justify-center h-16 px-2"
           type="text"
           name="title"
           placeholder="Title"
+          autoComplete="false"
+          autoCorrect="false"
           required
+          debounceTimeout={500}
+          onChange={(e) => onTitleChange(e.target.value)}
         />
         <textarea
           className="bg-white/10 rounded-lg flex items-center justify-center h-40 p-2"
           name="title"
           placeholder="Bio"
-        ></textarea>
+          onChange={(e) => onDescriptionChange(e.target.value)}
+        />
 
         <label className="text-md mt-2">Cover Photos</label>
         <CoverPhotos />
