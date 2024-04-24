@@ -5,7 +5,7 @@ import { IconContext } from "react-icons";
 import { FaTiktok, FaYoutube } from "react-icons/fa";
 import { PiInstagramLogoFill } from "react-icons/pi";
 import { CiCircleMinus } from "react-icons/ci";
-import Check from "../icons/Check";
+import Check from "../../../components/icons/Check";
 import { DebounceInput } from "react-debounce-input";
 
 type IconNames = "instagram" | "tiktok" | "youtube";
@@ -25,10 +25,9 @@ type ChannelProps = {
   index: number;
   icon: IconNames;
   isVerified: boolean;
-  onChange: (index: number) => void;
 };
 
-function Channel(props: ChannelProps) {
+function Channel(props: ChannelProps & { onChange: () => void }) {
   const icon = getIconFromName(props.icon);
 
   return (
@@ -44,7 +43,7 @@ function Channel(props: ChannelProps) {
           className="flex-1 bg-transparent px-2"
           autoCorrect="false"
           debounceTimeout={500}
-          onChange={() => props.onChange(props.index)}
+          onChange={props.onChange}
         />
       </div>
       <div className="rounded-e-lg flex justify-center items-center">
@@ -70,26 +69,27 @@ export default function Channels() {
       index: 0,
       icon: "instagram",
       isVerified: false,
-      onChange: onChannelChange,
     },
     {
       index: 1,
       icon: "tiktok",
       isVerified: false,
-      onChange: onChannelChange,
     },
     {
       index: 2,
       icon: "youtube",
       isVerified: false,
-      onChange: onChannelChange,
     },
   ]);
 
   return (
     <>
       {channels.map((x) => (
-        <Channel {...x} key={x.index} />
+        <Channel
+          {...x}
+          key={x.index}
+          onChange={() => onChannelChange(x.index)}
+        />
       ))}
     </>
   );

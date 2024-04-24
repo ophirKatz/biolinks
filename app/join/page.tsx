@@ -1,5 +1,5 @@
-import SignInForm from "@/components/join/SignInForm";
 import React from "react";
+import SignInForm from "./(components)/SignInForm";
 
 export default function JoinPage() {
   return (

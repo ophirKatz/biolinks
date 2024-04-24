@@ -1,7 +1,7 @@
 "use server";
 
 import React from "react";
-import { SubmitButton } from "./SubmitButton";
+import { SubmitButton } from "../../../components/forms/SubmitButton";
 import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
@@ -83,7 +83,7 @@ export default async function SignInForm() {
         <SubmitButton
           formAction={signUp}
           className="flex-1 w-full h-full flex justify-center items-center text-lg font-bold bg-white/30"
-          pendingText="Signing In..."
+          pendingText="Signing Up..."
         >
           Sign Up
         </SubmitButton>

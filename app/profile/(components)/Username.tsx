@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import Check from "../icons/Check";
+import React from "react";
+import Check from "../../../components/icons/Check";
 import { DebounceInput } from "react-debounce-input";
 
-export default function Username() {
-  const [isValid, setIsValid] = useState(true);
+export type UsernameProps = {
+  onChange: (value: string) => void;
+};
 
-  const onUsernameChange = (f: any) => {
-    console.log(f.target.value);
+export default function Username(props: UsernameProps) {
+  const onUsernameChange = (e: any) => {
+    props.onChange(e.target.value);
   };
 
   return (
