@@ -16,11 +16,13 @@ export default async function submitProfileForm(formData: ProfileFormData) {
         id: getUserResult.data.user!.id,
         username: formData.username,
         title: formData.title,
-        description: formData.description,
+        bio: formData.description,
       },
       { ignoreDuplicates: false, onConflict: "username" }
     )
     .select();
+
+  console.log("upsert result", data, error);
 
   const selectResult = await supabase.from("profiles").select();
 

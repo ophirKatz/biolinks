@@ -17,9 +17,9 @@ export type ProfileFormData = {
 
 export default function ProfileForm() {
   const [profileForm, setProfileForm] = useState<ProfileFormData>({
-    username: "",
-    title: "",
-    description: "",
+    username: "outt",
+    title: "Dolev & Aviv",
+    description: "hello",
   });
 
   const onUsernameChange = (username: string) => {
@@ -47,7 +47,7 @@ export default function ProfileForm() {
 
   return (
     <form className="animate-in flex flex-col w-full justify-center text-foreground gap-4">
-      <div className="flex flex-col gap-4 px-12">
+      <div className="flex flex-col gap-4 px-8">
         <Username onChange={onUsernameChange} />
 
         <label className="text-md mt-2">Bio</label>
