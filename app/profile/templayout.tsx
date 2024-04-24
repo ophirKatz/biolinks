@@ -1,7 +1,7 @@
 "use client";
 
-import { JoinStep } from "@/components/join/JoinStep";
-import JoinButtons from "@/components/join/JoinButtons";
+import { JoinStep } from "@/components/profile/JoinStep";
+import JoinButtons from "@/components/profile/JoinButtons";
 import React, { useState } from "react";
 
 export default function JoinLayout(props: any) {
