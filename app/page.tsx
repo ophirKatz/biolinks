@@ -26,6 +26,12 @@ export default async function Index() {
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
           <DeployButton />
           <Link
+            href="/profile"
+            className="py-2 px-3 min-w-16 flex items-center justify-center rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+          >
+            Profile
+          </Link>
+          <Link
             href="/join"
             className="py-2 px-3 min-w-16 flex items-center justify-center rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
           >
