@@ -19,3 +19,14 @@ export async function fetchUserProfile() {
 
   return await supabase.from("profiles").select().limit(1).single();
 }
+
+export async function fetchUserProfileByUsername(username: string) {
+  const supabase = createClient();
+
+  return await supabase
+    .from("profiles")
+    .select()
+    .eq("username", username)
+    .limit(1)
+    .single();
+}

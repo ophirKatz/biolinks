@@ -37,6 +37,12 @@ export default async function Index() {
           >
             Join
           </Link>
+          <Link
+            href="/outt"
+            className="py-2 px-3 min-w-16 flex items-center justify-center rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+          >
+            Outt
+          </Link>
           {isSupabaseConnected && <AuthButton />}
         </div>
       </nav>

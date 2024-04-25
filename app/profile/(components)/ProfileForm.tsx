@@ -13,6 +13,9 @@ export type ProfileFormData = {
   username: string;
   title: string;
   description: string;
+  coverPhoto1Url?: string;
+  coverPhoto2Url?: string;
+  coverPhoto3Url?: string;
 };
 
 export type ProfileFormProps = ProfileFormData;
@@ -41,6 +44,16 @@ export default function ProfileForm(props: ProfileFormProps) {
       ...profileForm,
       description,
     });
+  };
+
+  const onPhotoSelected = (index: number, filePath: string) => {
+    setProfileForm({
+      ...profileForm,
+      coverPhoto1Url: index === 0 ? filePath : profileForm.coverPhoto1Url,
+      coverPhoto2Url: index === 1 ? filePath : profileForm.coverPhoto2Url,
+      coverPhoto3Url: index === 2 ? filePath : profileForm.coverPhoto3Url,
+    });
+    console.log("profileForm", profileForm, filePath, index);
   };
 
   const onSaveForm = () => submitProfileFormAction(profileForm);
@@ -75,7 +88,14 @@ export default function ProfileForm(props: ProfileFormProps) {
         />
 
         <label className="text-md mt-2">Cover Photos</label>
-        <CoverPhotos />
+        <CoverPhotos
+          urls={[
+            profileForm.coverPhoto1Url,
+            profileForm.coverPhoto2Url,
+            profileForm.coverPhoto3Url,
+          ]}
+          onPhotoSelected={onPhotoSelected}
+        />
 
         <label className="text-md mt-2">Channels</label>
         <Channels />
