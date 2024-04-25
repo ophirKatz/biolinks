@@ -5,9 +5,9 @@ import { SubmitButton } from "../../../components/forms/SubmitButton";
 import CoverPhotos from "./CoverPhotos";
 import Channels from "./Channels";
 import Tabs from "./Tabs";
-import Username from "./Username";
-import submitProfileForm from "../submit-profile-form";
+import UsernameInput from "./UsernameInput";
 import { DebounceInput } from "react-debounce-input";
+import submitProfileFormAction from "../(actions)/submit-profile-form.action";
 
 export type ProfileFormData = {
   username: string;
@@ -15,11 +15,11 @@ export type ProfileFormData = {
   description: string;
 };
 
-export default function ProfileForm() {
+export type ProfileFormProps = ProfileFormData;
+
+export default function ProfileForm(props: ProfileFormProps) {
   const [profileForm, setProfileForm] = useState<ProfileFormData>({
-    username: "outt",
-    title: "Dolev & Aviv",
-    description: "hello",
+    ...props,
   });
 
   const onUsernameChange = (username: string) => {
@@ -43,16 +43,19 @@ export default function ProfileForm() {
     });
   };
 
-  const onSaveForm = () => submitProfileForm(profileForm);
+  const onSaveForm = () => submitProfileFormAction(profileForm);
 
   return (
     <form className="animate-in flex flex-col w-full justify-center text-foreground gap-4">
       <div className="flex flex-col gap-4 px-8">
-        <Username onChange={onUsernameChange} />
+        <UsernameInput
+          value={profileForm.username}
+          onChange={onUsernameChange}
+        />
 
         <label className="text-md mt-2">Bio</label>
         <DebounceInput
-          className="bg-white/10 rounded-lg flex items-center justify-center h-16 px-2"
+          className="bg-white/10 rounded-lg flex items-center justify-center h-16 px-2 text-white/50"
           type="text"
           name="title"
           placeholder="Title"
@@ -60,12 +63,14 @@ export default function ProfileForm() {
           autoCorrect="false"
           required
           debounceTimeout={500}
+          value={profileForm.title}
           onChange={(e) => onTitleChange(e.target.value)}
         />
         <textarea
-          className="bg-white/10 rounded-lg flex items-center justify-center h-40 p-2"
+          className="bg-white/10 rounded-lg flex items-center justify-center h-40 p-2 text-white/50"
           name="title"
           placeholder="Bio"
+          value={profileForm.description}
           onChange={(e) => onDescriptionChange(e.target.value)}
         />
 

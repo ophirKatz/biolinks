@@ -1,12 +1,13 @@
-import React from "react";
+import React, { InputHTMLAttributes } from "react";
 import Check from "../../../components/icons/Check";
 import { DebounceInput } from "react-debounce-input";
 
 export type UsernameProps = {
+  value: string;
   onChange: (value: string) => void;
 };
 
-export default function Username(props: UsernameProps) {
+export default function UsernameInput(props: UsernameProps) {
   return (
     <div className="w-full flex items-center font-bold h-16 text-lg rounded-lg text-white">
       <span className="h-full flex-1 flex justify-center items-center bg-white/10 rounded-s-lg">
@@ -25,6 +26,7 @@ export default function Username(props: UsernameProps) {
           placeholder="Username"
           required
           debounceTimeout={500}
+          value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         />
       </div>
