@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { SubmitButton } from "../../../components/forms/SubmitButton";
-import CoverPhotos from "./CoverPhotos";
-import Channels from "./Channels";
-import Tabs from "./Tabs";
+import CoverPhotos from "./EditCoverPhotos";
+import Channels from "./EditChannels";
+import Tabs from "./TabsEdit";
 import UsernameInput from "./UsernameInput";
 import { DebounceInput } from "react-debounce-input";
 import submitProfileFormAction from "../(actions)/submit-profile-form.action";

@@ -102,11 +102,14 @@ export default function CoverPhotos(
         return i === index
           ? {
               ...x,
+              status: PhotoStatus.Selected,
               url: uploadedFilePath,
             }
           : x;
       })
     );
+
+    console.log("Set photos", photos);
   };
 
   const [photos, setPhotos] = useState<PhotoProps[]>(
@@ -128,11 +131,11 @@ export default function CoverPhotos(
 
   return (
     <div className="flex justify-content-between gap-6">
-      {photos.map((x) => (
+      {photos.map((x, i) => (
         <CoverPhoto
           {...x}
-          key={x.index}
-          onImageSelected={(f) => onImageSelected(x.index, f)}
+          key={i}
+          onImageSelected={(f) => onImageSelected(i, f)}
         />
       ))}
     </div>

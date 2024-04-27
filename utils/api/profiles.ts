@@ -1,11 +1,13 @@
-import { UserProfile } from "@/app/models/UserProfile";
+import { UserProfileModel } from "@/models/UserProfile";
 import { createClient } from "../supabase/server";
 
-export async function saveUserProfile(userProfile: Omit<UserProfile, "id">) {
+export async function saveUserProfile(
+  userProfile: Omit<UserProfileModel, "id">
+) {
   const supabase = createClient();
 
   const getUserResult = await supabase.auth.getUser();
-  await supabase.from("profiles").upsert<UserProfile>(
+  await supabase.from("profiles").upsert<UserProfileModel>(
     {
       id: getUserResult.data.user!.id,
       ...userProfile,

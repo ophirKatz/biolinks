@@ -7,19 +7,9 @@ import { PiInstagramLogoFill } from "react-icons/pi";
 import { CiCircleMinus } from "react-icons/ci";
 import Check from "../../../components/icons/Check";
 import { DebounceInput } from "react-debounce-input";
+import ChannelIcon from "./ChannelIcon";
 
 type IconNames = "instagram" | "tiktok" | "youtube";
-
-const getIconFromName = (iconName: IconNames) => {
-  switch (iconName) {
-    case "instagram":
-      return <PiInstagramLogoFill />;
-    case "tiktok":
-      return <FaTiktok />;
-    case "youtube":
-      return <FaYoutube />;
-  }
-};
 
 type ChannelProps = {
   index: number;
@@ -28,13 +18,11 @@ type ChannelProps = {
 };
 
 function Channel(props: ChannelProps & { onChange: () => void }) {
-  const icon = getIconFromName(props.icon);
-
   return (
     <div className="rounded-lg h-16 bg-white/10 w-full grid grid-cols-[20%_60%_20%]">
       <div className="rounded-s-lg flex justify-center items-center">
         <IconContext.Provider value={{ size: "24" }}>
-          {icon}
+          <ChannelIcon name={props.icon} />
         </IconContext.Provider>
       </div>
       <div className="flex">

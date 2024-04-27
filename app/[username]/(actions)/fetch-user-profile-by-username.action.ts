@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { UserProfile } from "@/app/models/UserProfile";
+import { UserProfileModel } from "@/models/UserProfile";
 import { fetchUserProfileByUsername } from "@/utils/api/profiles";
 
 export const fetchUserProfileByUsernameAction = async (username: string) => {
@@ -11,5 +11,5 @@ export const fetchUserProfileByUsernameAction = async (username: string) => {
     return redirect("/profile?message=Could not find user profile");
   }
 
-  return data as UserProfile;
+  return data as UserProfileModel;
 };

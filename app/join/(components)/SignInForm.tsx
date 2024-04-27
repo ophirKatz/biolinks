@@ -50,8 +50,8 @@ export default async function SignInForm() {
   };
 
   return (
-    <form className="flex flex-col w-full justify-center text-foreground">
-      <div className="w-full flex flex-col gap-4 px-8 pb-[12rem]">
+    <form className="flex-1 flex flex-col justify-between w-full text-foreground">
+      <div className="w-full flex flex-col gap-4 px-8">
         <input
           className="bg-white/10 rounded-lg flex items-center justify-center h-16 px-2 text-center"
           type="text"
