@@ -2,6 +2,7 @@ import React from "react";
 import { fetchUserProfileByUsernameAction } from "./(actions)/fetch-user-profile-by-username.action";
 import Image from "next/image";
 import UserProfile from "../profile/(components)/UserProfile";
+import Link from "next/link";
 
 export default async function BioLinksPage({
   params,
@@ -36,7 +37,7 @@ export default async function BioLinksPage({
     },
     {
       id: "2",
-      title: "מבצא סופש בטרמינל איקס",
+      title: "מבצע סופש בטרמינל איקס",
       description: "",
       url: "",
     },
@@ -52,18 +53,24 @@ export default async function BioLinksPage({
       description: "",
       url: "",
     },
-    {
-      id: "5",
-      title: "1+1 בקולומביה עד ה3.4.2024",
-      description: "",
-      url: "",
-    },
+    // {
+    //   id: "5",
+    //   title: "1+1 בקולומביה עד ה-3.4.2024",
+    //   description: "",
+    //   url: "",
+    // },
   ];
 
   console.log("Found user profile", userProfile);
   return (
-    <div className="h-svh overflow-hidden w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 absolute px-8 pt-16">
+    <div className="h-svh overflow-hidden w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 absolute px-8 flex flex-col justify-between">
+      <div className="h-16"></div>
       <UserProfile profile={userProfile} />
+      <div className="h-16 flex justify-center items-center z-20">
+        <Link href="/join" className="text-lg text-white font-bold">
+          Try BioLinks
+        </Link>
+      </div>
     </div>
   );
 }

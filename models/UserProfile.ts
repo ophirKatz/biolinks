@@ -2,7 +2,7 @@ export type UserProfileModel = {
   id: string;
   username: string;
   title: string;
-  bio: string;
+  description: string;
   available_tabs: string[]; // 'contact', 'products', 'coupons', etc
   cover_photo1_url?: string;
   cover_photo2_url?: string;

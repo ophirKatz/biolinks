@@ -15,7 +15,9 @@ function Tab(props: { name: string; isActive: boolean; onClick: () => void }) {
       className="flex flex-col gap-1 items-center"
       onClick={props.onClick}
     >
-      <span className="font-medium">{props.name}</span>
+      <span className={"font-sm " + (props.isActive ? "font-bold" : "")}>
+        {props.name}
+      </span>
       <div className={props.isActive ? "w-8 border border-white" : ""}></div>
     </button>
   );
@@ -27,7 +29,7 @@ function Coupons(props: LinksProps) {
       {props.profile.coupons.map((p, i) => {
         return (
           <div
-            className="rounded-lg h-16 bg-white/30 w-full grid grid-cols-[20%_60%_20%]"
+            className="shadow-xl rounded-lg h-16 bg-white/30 w-full grid grid-cols-[20%_60%_20%]"
             key={i}
           >
             <div className="rounded-s-lg flex justify-center items-center">
@@ -35,7 +37,7 @@ function Coupons(props: LinksProps) {
                 <HiInformationCircle />
               </IconContext.Provider>
             </div>
-            <span className="h-full flex items-center" dir="rtl">
+            <span className="h-full flex items-center justify-center" dir="rtl">
               {p.title}
             </span>
             <div className="rounded-e-lg flex justify-center items-center">
@@ -56,11 +58,11 @@ export default function Links(props: LinksProps) {
   const onTabClick = (tab: string) => setCurrentTab(tab);
 
   return (
-    <div className="flex flex-col justify-between">
+    <div className="h-full flex flex-col justify-between gap-4">
       <div>
         <Coupons profile={props.profile} />
       </div>
-      <div className="w-full flex justify-between mt-4">
+      <div className="w-full flex justify-between">
         {props.profile.available_tabs.map((t, i) => (
           <Tab
             name={t}

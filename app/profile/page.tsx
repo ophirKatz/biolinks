@@ -18,7 +18,7 @@ export default async function ProfilePage({
     props = {
       username: userProfile.username,
       title: userProfile.title,
-      description: userProfile.bio,
+      description: userProfile.description,
       coverPhoto1Url: userProfile.cover_photo1_url,
       coverPhoto2Url: userProfile.cover_photo2_url,
       coverPhoto3Url: userProfile.cover_photo3_url,

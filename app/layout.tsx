@@ -34,7 +34,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">
+        <main className="min-h-svh flex flex-col items-center">
           {children}
         </main>
       </body>

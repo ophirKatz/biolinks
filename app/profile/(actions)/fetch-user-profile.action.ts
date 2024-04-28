@@ -8,6 +8,7 @@ export const fetchUserProfileAction = async () => {
   const { data, error } = await fetchUserProfile();
 
   if (error) {
+    console.error(error);
     return redirect("/profile?message=Could not find user profile");
   }
 
