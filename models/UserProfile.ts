@@ -3,7 +3,7 @@ export type UserProfileModel = {
   username: string;
   title: string;
   description: string;
-  available_tabs: string[]; // 'contact', 'products', 'coupons', etc
+  active_tabs: string[]; // 'contact', 'products', 'coupons', etc
   cover_photo1_url?: string;
   cover_photo2_url?: string;
   cover_photo3_url?: string;
@@ -12,9 +12,15 @@ export type UserProfileModel = {
   products: UserProductModel[];
 };
 
+export enum ChannelType {
+  Instagram = "Instagram",
+  Tiktok = "Tiktok",
+  Youtube = "Youtube",
+}
+
 export type UserChannelModel = {
   id: string;
-  name: string; // 'instagram' | 'tiktok' | etc
+  type: ChannelType;
   follower_count: string;
   url: string;
 };
@@ -24,6 +30,7 @@ export type UserCouponModel = {
   title: string;
   description: string;
   url: string;
+  coupon_code: string;
 };
 
 export type UserProductModel = {

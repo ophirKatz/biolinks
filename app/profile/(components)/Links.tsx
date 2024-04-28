@@ -63,7 +63,7 @@ export default function Links(props: LinksProps) {
         <Coupons profile={props.profile} />
       </div>
       <div className="w-full flex justify-between">
-        {props.profile.available_tabs.map((t, i) => (
+        {props.profile.active_tabs.map((t, i) => (
           <Tab
             name={t}
             isActive={currentTab === t}

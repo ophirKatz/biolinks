@@ -26,7 +26,7 @@ export default async function BioLinksPage({
     },
   ];
 
-  userProfile.available_tabs = ["contact", "products", "coupons"];
+  userProfile.active_tabs = ["contact", "products", "coupons"];
 
   userProfile.coupons = [
     {

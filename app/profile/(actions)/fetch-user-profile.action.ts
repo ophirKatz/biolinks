@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { UserProfileModel } from "@/models/UserProfile";
-import { fetchUserProfile } from "@/utils/api/profiles";
+import { fetchUserProfile } from "@/utils/api/profiles-api";
 
 export const fetchUserProfileAction = async () => {
   const { data, error } = await fetchUserProfile();
