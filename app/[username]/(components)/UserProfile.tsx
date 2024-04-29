@@ -15,7 +15,7 @@ export default function UserProfile(props: UserProfileProps) {
     <div className="h-full w-full">
       <UserCoverPhoto profile={props.profile} />
 
-      <div className="h-full flex flex-col gap-8 z-20 relative">
+      <div className="h-full flex flex-col gap-8 z-30 relative">
         <div className="flex flex-col items-center gap-2">
           <Link href={"/" + props.profile.username} className="text-xl">
             {props.profile.title}

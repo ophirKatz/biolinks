@@ -38,11 +38,12 @@ export default async function SignInForm() {
       email,
       password,
       options: {
-        emailRedirectTo: `${origin}/auth/callback`,
+        emailRedirectTo: `${origin}/profile`,
       },
     });
 
     if (error) {
+      console.error("Failed to sign up user", error);
       return redirect("/login?message=Could not authenticate user");
     }
 

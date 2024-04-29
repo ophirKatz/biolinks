@@ -3,7 +3,7 @@ export type UserProfileModel = {
   username: string;
   title: string;
   description: string;
-  active_tabs: string[]; // 'contact', 'products', 'coupons', etc
+  active_tabs: Tab[]; //
   cover_photo1_url?: string;
   cover_photo2_url?: string;
   cover_photo3_url?: string;
@@ -12,10 +12,16 @@ export type UserProfileModel = {
   products: UserProductModel[];
 };
 
+export enum Tab {
+  Products = "products",
+  Coupons = "coupons",
+  Contact = "contact",
+}
+
 export enum ChannelType {
-  Instagram = "Instagram",
-  Tiktok = "Tiktok",
-  Youtube = "Youtube",
+  Instagram = "instagram",
+  Tiktok = "tiktok",
+  Youtube = "youtube",
 }
 
 export type UserChannelModel = {

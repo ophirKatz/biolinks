@@ -3,6 +3,7 @@ import { fetchUserProfileByUsernameAction } from "./(actions)/fetch-user-profile
 import Image from "next/image";
 import UserProfile from "./(components)/UserProfile";
 import Link from "next/link";
+import { ChannelType, Tab } from "@/models/UserProfile";
 
 export default async function BioLinksPage({
   params,
@@ -14,19 +15,19 @@ export default async function BioLinksPage({
   userProfile.channels = [
     {
       id: "1",
-      name: "instagram",
+      type: ChannelType.Instagram,
       follower_count: "100K",
       url: "",
     },
     {
       id: "2",
-      name: "tiktok",
+      type: ChannelType.Tiktok,
       follower_count: "143K",
       url: "",
     },
   ];
 
-  userProfile.active_tabs = ["contact", "products", "coupons"];
+  userProfile.active_tabs = [Tab.Contact, Tab.Coupons, Tab.Products];
 
   userProfile.coupons = [
     {
@@ -34,24 +35,28 @@ export default async function BioLinksPage({
       title: "70 הנחה בזארה",
       description: "",
       url: "",
+      coupon_code: "",
     },
     {
       id: "2",
       title: "מבצע סופש בטרמינל איקס",
       description: "",
       url: "",
+      coupon_code: "",
     },
     {
       id: "3",
       title: "30% הנחה על המצלמה שלי",
       description: "",
       url: "",
+      coupon_code: "",
     },
     {
       id: "4",
       title: "חודש חינם ברייזאפ",
       description: "",
       url: "",
+      coupon_code: "",
     },
     // {
     //   id: "5",
@@ -66,7 +71,7 @@ export default async function BioLinksPage({
     <div className="h-svh overflow-hidden w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 absolute px-8 flex flex-col justify-between">
       <div className="h-16"></div>
       <UserProfile profile={userProfile} />
-      <div className="h-16 flex justify-center items-center z-20">
+      <div className="h-16 flex justify-center items-center z-30">
         <Link href="/login" className="text-lg text-white font-bold">
           Try BioLinks
         </Link>

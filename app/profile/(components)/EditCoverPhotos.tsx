@@ -30,7 +30,12 @@ function CoverPhoto(
   };
 
   return (
-    <div className={"rounded-lg h-44 bg-white/10 flex-1 border-2"}>
+    <div
+      className={
+        "rounded-lg h-44 bg-white/10 flex-1 " +
+        (props.status === PhotoStatus.Inactive ? "" : "border-2")
+      }
+    >
       {props.status === PhotoStatus.Selected ? (
         <button
           type="button"
@@ -130,7 +135,7 @@ export default function CoverPhotos(
   );
 
   return (
-    <div className="flex justify-content-between gap-6">
+    <div className="flex flex-row-reverse justify-content-between gap-6">
       {photos.map((x, i) => (
         <CoverPhoto
           {...x}
