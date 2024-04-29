@@ -1,7 +1,7 @@
 import React from "react";
 import { fetchUserProfileByUsernameAction } from "./(actions)/fetch-user-profile-by-username.action";
 import Image from "next/image";
-import UserProfile from "../profile/(components)/UserProfile";
+import UserProfile from "./(components)/UserProfile";
 import Link from "next/link";
 
 export default async function BioLinksPage({
@@ -67,7 +67,7 @@ export default async function BioLinksPage({
       <div className="h-16"></div>
       <UserProfile profile={userProfile} />
       <div className="h-16 flex justify-center items-center z-20">
-        <Link href="/join" className="text-lg text-white font-bold">
+        <Link href="/login" className="text-lg text-white font-bold">
           Try BioLinks
         </Link>
       </div>

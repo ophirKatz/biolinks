@@ -22,6 +22,17 @@ export default function UserCoverPhoto(props: UserProfileProps) {
   }, [index]);
 
   return (
-    <Image className="object-cover z-10" src={urls[index]!} fill alt="cover" />
+    <div className="absolute">
+      {urls.length === 0 ? (
+        <Image
+          className="object-cover z-10"
+          src={urls[index]!}
+          fill
+          alt="cover"
+        />
+      ) : (
+        <></>
+      )}
+    </div>
   );
 }

@@ -74,17 +74,17 @@ export default function Tabs() {
   const [tabs, setTabs] = useState([
     {
       index: 0,
-      name: "Products",
+      name: "מוצרים",
       isActive: false,
     },
     {
       index: 1,
-      name: "Coupons",
+      name: "קודי קופון",
       isActive: false,
     },
     {
       index: 2,
-      name: "Contact",
+      name: "יצירת קשר",
       isActive: false,
     },
   ]);

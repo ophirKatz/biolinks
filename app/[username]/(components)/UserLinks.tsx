@@ -4,6 +4,7 @@ import { UserProfileModel } from "@/models/UserProfile";
 import React, { useState } from "react";
 import { IconContext } from "react-icons";
 import { HiInformationCircle } from "react-icons/hi2";
+import { RiDiscountPercentFill } from "react-icons/ri";
 
 type LinksProps = {
   profile: UserProfileModel;
@@ -41,9 +42,9 @@ function Coupons(props: LinksProps) {
               {p.title}
             </span>
             <div className="rounded-e-lg flex justify-center items-center">
-              <IconContext.Provider
-                value={{ size: "24" }}
-              ></IconContext.Provider>
+              <IconContext.Provider value={{ size: "24" }}>
+                <RiDiscountPercentFill />
+              </IconContext.Provider>
             </div>
           </div>
         );
@@ -52,7 +53,7 @@ function Coupons(props: LinksProps) {
   );
 }
 
-export default function Links(props: LinksProps) {
+export default function UserLinks(props: LinksProps) {
   const [currentTab, setCurrentTab] = useState("products");
 
   const onTabClick = (tab: string) => setCurrentTab(tab);

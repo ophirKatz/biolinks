@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { fetchUserProfileAction } from "./(actions)/fetch-user-profile.action";
 import ProfileForm, { ProfileFormProps } from "./(components)/ProfileForm";
 import React from "react";
@@ -15,6 +16,7 @@ export default async function ProfilePage({
 
   if (!searchParams.message) {
     const userProfile = await fetchUserProfileAction();
+    console.log("userProfile from api", userProfile);
     props = {
       username: userProfile.username,
       title: userProfile.title,
@@ -28,7 +30,9 @@ export default async function ProfilePage({
   return (
     <div className="w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2">
       <div className="flex flex-col justify-center items-center gap-4 mt-8 font-bold pt-20">
-        <span className="text-xl">Welcome to BioLinks!</span>
+        <Link href="/profile">
+          <span className="text-xl">Welcome to BioLinks!</span>
+        </Link>
         <span className="text-lg text-gray-400">Let's link that bio</span>
         {searchParams.message ? (
           <span className="text-md text-red-600">{searchParams.message}</span>

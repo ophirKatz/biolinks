@@ -20,7 +20,7 @@ export default async function SignInForm() {
     });
 
     if (error) {
-      return redirect("/join?message=Could not authenticate user");
+      return redirect("/login?message=Could not authenticate user");
     }
 
     return redirect("/profile");
@@ -43,10 +43,10 @@ export default async function SignInForm() {
     });
 
     if (error) {
-      return redirect("/join?message=Could not authenticate user");
+      return redirect("/login?message=Could not authenticate user");
     }
 
-    return redirect("/join?message=Check email to continue sign in process");
+    return redirect("/login?message=Check email to continue sign in process");
   };
 
   return (

@@ -2,7 +2,7 @@ import { UserProfileModel } from "@/models/UserProfile";
 import React from "react";
 import Image from "next/image";
 import UserChannel from "./UserChannel";
-import Links from "./Links";
+import UserLinks from "./UserLinks";
 import Link from "next/link";
 import UserCoverPhoto from "./UserCoverPhoto";
 
@@ -28,7 +28,7 @@ export default function UserProfile(props: UserProfileProps) {
           ))}
         </div>
         <div className="flex-1">
-          <Links profile={props.profile} />
+          <UserLinks profile={props.profile} />
         </div>
       </div>
     </div>

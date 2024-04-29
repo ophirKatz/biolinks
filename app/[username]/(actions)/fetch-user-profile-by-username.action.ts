@@ -8,7 +8,7 @@ export const fetchUserProfileByUsernameAction = async (username: string) => {
   const { data, error } = await fetchUserProfileByUsername(username);
 
   if (error) {
-    return redirect("/join?message=Could not find user profile");
+    return redirect("/login?message=Could not find user profile");
   }
 
   return data as UserProfileModel;

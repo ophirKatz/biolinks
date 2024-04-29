@@ -66,9 +66,9 @@ export default function ProfileForm(props: ProfileFormProps) {
           onChange={onUsernameChange}
         />
 
-        <label className="text-md mt-2">Bio</label>
+        <label className="text-md mt-2 text-end">ביו</label>
         <DebounceInput
-          className="bg-white/10 rounded-lg flex items-center justify-center h-16 px-2 text-white/50"
+          className="bg-white/10 rounded-lg flex items-center justify-center h-16 px-2 text-white/50 text-end"
           type="text"
           name="title"
           placeholder="Title"
@@ -80,14 +80,14 @@ export default function ProfileForm(props: ProfileFormProps) {
           onChange={(e) => onTitleChange(e.target.value)}
         />
         <textarea
-          className="bg-white/10 rounded-lg flex items-center justify-center h-40 p-2 text-white/50"
+          className="bg-white/10 rounded-lg flex items-center justify-center h-40 p-2 text-white/50 text-end"
           name="title"
           placeholder="Bio"
           value={profileForm.description}
           onChange={(e) => onDescriptionChange(e.target.value)}
         />
 
-        <label className="text-md mt-2">Cover Photos</label>
+        <label className="text-md mt-2 text-end">תמונות רקע</label>
         <CoverPhotos
           urls={[
             profileForm.coverPhoto1Url,
@@ -97,10 +97,10 @@ export default function ProfileForm(props: ProfileFormProps) {
           onPhotoSelected={onPhotoSelected}
         />
 
-        <label className="text-md mt-2">Channels</label>
+        <label className="text-md mt-2 text-end">ערוצים</label>
         <Channels />
 
-        <label className="text-md mt-2">Tabs</label>
+        <label className="text-md mt-2 text-end">טאבים וקישורים</label>
         <Tabs />
       </div>
 

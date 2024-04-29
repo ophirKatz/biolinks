@@ -7,7 +7,7 @@ import { PiInstagramLogoFill } from "react-icons/pi";
 import { CiCircleMinus } from "react-icons/ci";
 import Check from "../../../components/icons/Check";
 import { DebounceInput } from "react-debounce-input";
-import ChannelIcon from "./ChannelIcon";
+import ChannelIcon from "../../../components/ChannelIcon";
 
 type IconNames = "instagram" | "tiktok" | "youtube";
 
