@@ -6,19 +6,32 @@ export async function saveUserProfile(
 ) {
   const supabase = createClient();
 
-  const { channels, coupons, products, ...profile } = userProfile;
+  const { tabs, channels, coupons, products, ...profile } = userProfile;
 
   const getUserResult = await supabase.auth.getUser();
-  const { data, error } = await supabase
+  const userId = getUserResult.data.user!.id;
+  const { error: profileUpdateError } = await supabase
     .from("profiles")
     .update({
       ...profile,
     })
-    .eq("id", getUserResult.data.user!.id)
+    .eq("id", userId)
     .select();
 
-  if (error) {
-    console.error(error);
+  if (profileUpdateError) {
+    console.error(profileUpdateError);
+    return;
+  }
+
+  console.log("updating tabs", tabs);
+  const { error: tabsUpdateError } = await supabase
+    .from("tabs")
+    .upsert(tabs)
+    .select();
+
+  if (tabsUpdateError) {
+    console.error(tabsUpdateError);
+    return;
   }
 }
 
@@ -33,10 +46,14 @@ export async function fetchUserProfile() {
     username,
     title,
     description,
-    active_tabs,
     cover_photo1_url,
     cover_photo2_url,
     cover_photo3_url,
+    tabs (
+      id,
+      type,
+      is_active
+    ),
     channels (
       id,
       type,
@@ -73,10 +90,14 @@ export async function fetchUserProfileByUsername(username: string) {
       username,
       title,
       description,
-      active_tabs,
       cover_photo1_url,
       cover_photo2_url,
       cover_photo3_url,
+      tabs (
+        id,
+        type,
+        is_active
+      ),
       channels (
         id,
         type,

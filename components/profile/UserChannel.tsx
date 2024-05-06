@@ -2,7 +2,7 @@
 
 import { UserChannelModel } from "@/models/UserProfile";
 import { IconContext } from "react-icons";
-import ChannelIcon from "../../../components/ChannelIcon";
+import ChannelIcon from "../ChannelIcon";
 
 type UserChannelProps = {
   channel: UserChannelModel;

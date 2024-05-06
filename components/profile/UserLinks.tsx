@@ -1,6 +1,6 @@
 "use client";
 
-import { UserProfileModel } from "@/models/UserProfile";
+import { TabType, UserProfileModel, UserTabModel } from "@/models/UserProfile";
 import React, { useState } from "react";
 import { IconContext } from "react-icons";
 import { HiInformationCircle } from "react-icons/hi2";
@@ -10,16 +10,31 @@ type LinksProps = {
   profile: UserProfileModel;
 };
 
-function Tab(props: { name: string; isActive: boolean; onClick: () => void }) {
+function getTabText(type: TabType): string {
+  switch (type) {
+    case TabType.Products:
+      return "מוצרים";
+    case TabType.Coupons:
+      return "קודי קופון";
+    case TabType.Contact:
+      return "צרו קשר";
+  }
+}
+
+function Tab(props: {
+  type: TabType;
+  isSelected: boolean;
+  onClick: () => void;
+}) {
   return (
     <button
       className="flex flex-col gap-1 items-center"
       onClick={props.onClick}
     >
-      <span className={"font-sm " + (props.isActive ? "font-bold" : "")}>
-        {props.name}
+      <span className={"font-sm " + (props.isSelected ? "font-bold" : "")}>
+        {getTabText(props.type)}
       </span>
-      <div className={props.isActive ? "w-8 border border-white" : ""}></div>
+      <div className={props.isSelected ? "w-8 border border-white" : ""}></div>
     </button>
   );
 }
@@ -54,9 +69,9 @@ function Coupons(props: LinksProps) {
 }
 
 export default function UserLinks(props: LinksProps) {
-  const [currentTab, setCurrentTab] = useState("products");
+  const [currentTab, setCurrentTab] = useState(TabType.Products);
 
-  const onTabClick = (tab: string) => setCurrentTab(tab);
+  const onTabClick = (tab: UserTabModel) => setCurrentTab(tab.type);
 
   return (
     <div className="h-full flex flex-col justify-between gap-4">
@@ -64,10 +79,10 @@ export default function UserLinks(props: LinksProps) {
         <Coupons profile={props.profile} />
       </div>
       <div className="w-full flex justify-between">
-        {props.profile.active_tabs.map((t, i) => (
+        {props.profile.tabs.map((t, i) => (
           <Tab
-            name={t}
-            isActive={currentTab === t}
+            type={t.type}
+            isSelected={currentTab === t.type}
             key={i}
             onClick={() => onTabClick(t)}
           />

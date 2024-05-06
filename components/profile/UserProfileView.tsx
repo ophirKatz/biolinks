@@ -1,16 +1,15 @@
 import { UserProfileModel } from "@/models/UserProfile";
 import React from "react";
-import Image from "next/image";
 import UserChannel from "./UserChannel";
 import UserLinks from "./UserLinks";
 import Link from "next/link";
 import UserCoverPhoto from "./UserCoverPhoto";
 
-export type UserProfileProps = {
+export type UserProfileViewProps = {
   profile: UserProfileModel;
 };
 
-export default function UserProfile(props: UserProfileProps) {
+export default function UserProfileView(props: UserProfileViewProps) {
   return (
     <div className="h-full w-full">
       <UserCoverPhoto profile={props.profile} />

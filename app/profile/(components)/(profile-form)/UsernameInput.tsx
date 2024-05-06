@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from "react";
-import Check from "../../../components/icons/Check";
+import Check from "../../../../components/icons/Check";
 import { DebounceInput } from "react-debounce-input";
 
 export type UsernameProps = {

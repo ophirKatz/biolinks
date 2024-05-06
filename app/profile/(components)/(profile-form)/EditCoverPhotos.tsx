@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import { IconContext } from "react-icons";
 import { FiPlus } from "react-icons/fi";
-import { uploadCoverPhotoAction } from "../(actions)/upload-covert-photos.action";
+import { uploadCoverPhotoAction } from "../../(actions)/upload-covert-photos.action";
 import Image from "next/image";
 
 enum PhotoStatus {

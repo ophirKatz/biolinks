@@ -3,25 +3,42 @@ export type UserProfileModel = {
   username: string;
   title: string;
   description: string;
-  active_tabs: Tab[]; //
   cover_photo1_url?: string;
   cover_photo2_url?: string;
   cover_photo3_url?: string;
+  tabs: UserTabModel[];
   channels: UserChannelModel[];
   coupons: UserCouponModel[];
   products: UserProductModel[];
 };
 
-export enum Tab {
-  Products = "products",
-  Coupons = "coupons",
-  Contact = "contact",
+export enum TabType {
+  Products = "Products",
+  Coupons = "Coupons",
+  Contact = "Contact",
 }
 
 export enum ChannelType {
-  Instagram = "instagram",
-  Tiktok = "tiktok",
-  Youtube = "youtube",
+  Instagram = "Instagram",
+  Tiktok = "Tiktok",
+  Youtube = "Youtube",
+}
+
+export type UserTabModel = {
+  id: number;
+  type: TabType;
+  is_active: boolean;
+};
+
+export function getTabName(tab: UserTabModel) {
+  switch (tab.type) {
+    case TabType.Products:
+      return "מוצרים";
+    case TabType.Coupons:
+      return "קודי קופון";
+    case TabType.Contact:
+      return "יצירת קשר";
+  }
 }
 
 export type UserChannelModel = {

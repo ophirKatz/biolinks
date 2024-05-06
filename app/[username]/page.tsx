@@ -1,9 +1,8 @@
 import React from "react";
 import { fetchUserProfileByUsernameAction } from "./(actions)/fetch-user-profile-by-username.action";
-import Image from "next/image";
-import UserProfile from "./(components)/UserProfile";
 import Link from "next/link";
-import { ChannelType, Tab } from "@/models/UserProfile";
+import { ChannelType } from "@/models/UserProfile";
+import UserProfileView from "@/components/profile/UserProfileView";
 
 export default async function BioLinksPage({
   params,
@@ -26,8 +25,6 @@ export default async function BioLinksPage({
       url: "",
     },
   ];
-
-  userProfile.active_tabs = [Tab.Contact, Tab.Coupons, Tab.Products];
 
   userProfile.coupons = [
     {
@@ -70,7 +67,7 @@ export default async function BioLinksPage({
   return (
     <div className="h-svh overflow-hidden w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 absolute px-8 flex flex-col justify-between">
       <div className="h-16"></div>
-      <UserProfile profile={userProfile} />
+      <UserProfileView profile={userProfile} />
       <div className="h-16 flex justify-center items-center z-30">
         <Link href="/login" className="text-lg text-white font-bold">
           Try BioLinks

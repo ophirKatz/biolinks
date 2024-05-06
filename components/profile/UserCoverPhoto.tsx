@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { UserProfileProps } from "./UserProfile";
+import { UserProfileViewProps } from "./UserProfileView";
 import Image from "next/image";
 
-export default function UserCoverPhoto(props: UserProfileProps) {
+export default function UserCoverPhoto(props: UserProfileViewProps) {
   const [index, setIndex] = useState(0);
 
   const urls = [
