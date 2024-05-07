@@ -1,12 +1,7 @@
-import Link from "next/link";
 import { fetchUserProfileAction } from "./(actions)/fetch-user-profile.action";
-import ProfileForm from "./(components)/(profile-form)/ProfileForm";
 import React from "react";
 import { UserProfileModel } from "@/models/UserProfile";
-import {
-  SearchParamsCodes,
-  getSearchParamsMessage,
-} from "@/utils/search-params-codes";
+import { SearchParamsCodes } from "@/utils/search-params-codes";
 import ProfileContainer from "./(components)/ProfileContainer";
 
 export default async function ProfilePage({
@@ -14,7 +9,6 @@ export default async function ProfilePage({
 }: {
   searchParams: { code: SearchParamsCodes };
 }) {
-  // const searchParams = useSearchParams();
   let profile: UserProfileModel = {
     id: "",
     username: "",

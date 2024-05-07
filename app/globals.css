@@ -59,7 +59,7 @@ input:focus {
 }
 
 .animate-in {
-  animation: animateIn 0.3s ease 0.15s both;
+  animation: animateIn 1s ease 0.15s both;
 }
 
 @keyframes animateIn {
@@ -70,5 +70,93 @@ input:focus {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.animate-preview-left {
+  animation: animatePreviewLeft 1s ease 0.15s both;
+}
+
+@keyframes animatePreviewLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-right {
+  animation: animateRight 1s ease 0.15s both;
+}
+
+@keyframes animateRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.animate-in-ltr {
+  animation: animateInLeftToRight 1s ease 0.15s both;
+}
+
+@keyframes animateInLeftToRight {
+  from {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+}
+
+.animate-in-rtl {
+  animation: animateInRightToLeft 1s ease 0.15s both;
+}
+
+@keyframes animateInRightToLeft {
+  from {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-100%);
+  }
+}
+
+.animate-out-ltr {
+  animation: animateOutLeftToRight 1s ease 0.15s both;
+}
+
+@keyframes animateOutLeftToRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.animate-out-rtl {
+  animation: animateOutRightToLeft 1s ease 0.15s both;
+}
+
+@keyframes animateOutRightToLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
   }
 }

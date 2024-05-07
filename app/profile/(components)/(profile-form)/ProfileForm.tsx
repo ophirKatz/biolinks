@@ -13,6 +13,8 @@ import Link from "next/link";
 
 export type ProfileFormProps = {
   profile: UserProfileModel;
+  onPreview: (profile: UserProfileModel) => void;
+  className?: string;
 };
 
 export default function ProfileForm(props: ProfileFormProps) {
@@ -66,7 +68,12 @@ export default function ProfileForm(props: ProfileFormProps) {
   const onSaveForm = () => submitProfileFormAction(profileForm);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-4 mt-8 font-bold pt-20">
+    <div
+      className={
+        "flex flex-col justify-center items-center gap-4 mt-8 font-bold pt-20 " +
+        props.className
+      }
+    >
       <Link href="/profile">
         <span className="text-xl">Welcome to BioLinks!</span>
       </Link>
@@ -79,7 +86,7 @@ export default function ProfileForm(props: ProfileFormProps) {
           <></>
         )} */}
 
-      <form className="animate-in flex flex-col w-full justify-center text-foreground gap-4">
+      <form className="flex flex-col w-full justify-center text-foreground gap-4">
         <div className="flex flex-col gap-4 px-8">
           <UsernameInput
             value={profileForm.username}
@@ -136,13 +143,13 @@ export default function ProfileForm(props: ProfileFormProps) {
           >
             Save
           </SubmitButton>
-          <SubmitButton
+          <button
             className="flex-1 w-full h-full flex justify-center items-center text-lg font-bold"
             type="button"
-            pendingText="Saving Draft..."
+            onClick={() => props.onPreview(profileForm)}
           >
             Preview
-          </SubmitButton>
+          </button>
         </div>
       </form>
     </div>
