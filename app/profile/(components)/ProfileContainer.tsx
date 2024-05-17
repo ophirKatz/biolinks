@@ -1,10 +1,15 @@
 "use client";
 
-import { UserProductModel, UserProfileModel } from "@/models/UserProfile";
+import {
+  TabType,
+  UserProductModel,
+  UserProfileModel,
+} from "@/models/UserProfile";
 import React, { useMemo, useState } from "react";
 import ProfileForm from "./(profile-form)/ProfileForm";
 import ProfilePreview from "./(preview)/ProfilePreview";
 import ProductsForm from "./(products-form)/ProductsForms";
+import submitProfileAction from "../(actions)/submit-profile.action";
 
 export type ProfileContainerProps = {
   profile: UserProfileModel;
@@ -17,7 +22,7 @@ enum ProfilePageMode {
 }
 
 export default function ProfileContainer(props: ProfileContainerProps) {
-  const [mode, setMode] = useState(ProfilePageMode.ProductsForm);
+  const [mode, setMode] = useState(ProfilePageMode.ProfileForm);
   const [isAnimate, setIsAnimate] = useState(false);
 
   const previewClassName = useMemo(() => {
@@ -34,6 +39,8 @@ export default function ProfileContainer(props: ProfileContainerProps) {
     UserProfileModel | undefined
   >(undefined);
 
+  const [profile, setProfile] = useState<UserProfileModel>(props.profile);
+
   const goToPreview = (profile: UserProfileModel) => {
     setPreviewProfile(profile);
     setMode(ProfilePageMode.Preview);
@@ -43,6 +50,38 @@ export default function ProfileContainer(props: ProfileContainerProps) {
   const goBackToProfileForm = () => {
     setMode(ProfilePageMode.ProfileForm);
     setIsAnimate(true);
+  };
+
+  const goToProductsEdit = () => {
+    setMode(ProfilePageMode.ProductsForm);
+    setIsAnimate(true);
+  };
+
+  const saveProducts = (products: UserProductModel[]) => {
+    setProfile({
+      ...profile,
+      tabs: profile.tabs.map((t) =>
+        t.type === TabType.Products
+          ? {
+              ...t,
+              count: products.length,
+            }
+          : t
+      ),
+      products,
+    });
+
+    setMode(ProfilePageMode.ProfileForm);
+
+    console.log("updated profile in container", profile);
+  };
+
+  const onSaveForm = (profileForm: UserProfileModel) => {
+    setProfile({
+      ...profileForm,
+      products: [...profile.products],
+    });
+    submitProfileAction(profile);
   };
 
   return (
@@ -57,15 +96,20 @@ export default function ProfileContainer(props: ProfileContainerProps) {
         <></>
       )}
       {mode === ProfilePageMode.ProfileForm ? (
-        <ProfileForm profile={props.profile} onPreview={goToPreview} />
+        <ProfileForm
+          profile={props.profile}
+          onPreview={goToPreview}
+          onSave={onSaveForm}
+          onProductsLinkClick={goToProductsEdit}
+        />
       ) : (
         <></>
       )}
       {mode === ProfilePageMode.ProductsForm ? (
         <ProductsForm
           profile={props.profile}
-          onBack={() => {}}
-          onSave={(products: UserProductModel[]) => {}}
+          onBack={goBackToProfileForm}
+          onSave={saveProducts}
         />
       ) : (
         <></>

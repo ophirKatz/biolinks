@@ -28,6 +28,7 @@ export type UserTabModel = {
   id: number;
   type: TabType;
   is_active: boolean;
+  count: number;
 };
 
 export function getTabName(tab: UserTabModel) {
@@ -58,6 +59,7 @@ export type UserCouponModel = {
 
 export type UserProductModel = {
   id: string;
+  user_id: string;
   title: string;
   description: string;
   url: string;

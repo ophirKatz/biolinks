@@ -1,4 +1,4 @@
-import { UserProfileModel } from "@/models/UserProfile";
+import { UserProductModel, UserProfileModel } from "@/models/UserProfile";
 import { createClient } from "../supabase/server";
 
 export async function saveUserProfile(
@@ -33,6 +33,47 @@ export async function saveUserProfile(
     console.error(tabsUpdateError);
     return;
   }
+
+  await saveUserProducts(products);
+}
+
+export async function saveUserProducts(products: UserProductModel[]) {
+  const supabase = createClient();
+
+  console.log("updating products", products);
+
+  const productsToUpdate = products.filter((p) => p.id !== "");
+  const productsToAdd = products
+    .filter((p) => p.id === "")
+    .map((p) => {
+      const { id, user_id, ...p_t } = p;
+      return p_t;
+    });
+
+  console.log("productsToUpdate", productsToUpdate);
+  console.log("productsToAdd", productsToAdd);
+
+  const { error: productsInsertError } = await supabase
+    .from("products")
+    .insert(productsToAdd);
+
+  if (productsInsertError) {
+    console.error("product insert error", productsInsertError, productsToAdd);
+    return;
+  }
+
+  const { error: productsUpdateError } = await supabase
+    .from("products")
+    .upsert(productsToUpdate);
+
+  if (productsUpdateError) {
+    console.error(
+      "product update error",
+      productsUpdateError,
+      productsToUpdate
+    );
+    return;
+  }
 }
 
 export async function fetchUserProfile() {
@@ -52,7 +93,8 @@ export async function fetchUserProfile() {
     tabs (
       id,
       type,
-      is_active
+      is_active,
+      count
     ),
     channels (
       id,
@@ -96,7 +138,8 @@ export async function fetchUserProfileByUsername(username: string) {
       tabs (
         id,
         type,
-        is_active
+        is_active,
+        count
       ),
       channels (
         id,

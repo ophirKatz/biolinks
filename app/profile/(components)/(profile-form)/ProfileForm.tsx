@@ -7,13 +7,15 @@ import Channels from "./EditChannels";
 import TabsEdit from "./TabsEdit";
 import UsernameInput from "./UsernameInput";
 import { DebounceInput } from "react-debounce-input";
-import submitProfileFormAction from "../../(actions)/submit-profile-form.action";
+import submitProfileAction from "../../(actions)/submit-profile.action";
 import { UserProfileModel } from "@/models/UserProfile";
 import Link from "next/link";
 
 export type ProfileFormProps = {
   profile: UserProfileModel;
   onPreview: (profile: UserProfileModel) => void;
+  onSave: (profile: UserProfileModel) => void;
+  onProductsLinkClick: () => void;
   className?: string;
 };
 
@@ -65,7 +67,7 @@ export default function ProfileForm(props: ProfileFormProps) {
     console.log("Setting tab activity", index, profileForm.tabs);
   };
 
-  const onSaveForm = () => submitProfileFormAction(profileForm);
+  const onSaveForm = () => props.onSave(profileForm);
 
   return (
     <div
@@ -95,7 +97,8 @@ export default function ProfileForm(props: ProfileFormProps) {
 
           <label className="text-md mt-2 text-end">ביו</label>
           <DebounceInput
-            className="bg-white/10 rounded-lg flex items-center justify-center h-16 px-2 text-white/50 text-end"
+            dir="rtl"
+            className="bg-white/10 rounded-lg flex items-center justify-center h-16 px-2 text-white/50"
             type="text"
             name="title"
             placeholder="כותרת"
@@ -107,7 +110,8 @@ export default function ProfileForm(props: ProfileFormProps) {
             onChange={(e) => onTitleChange(e.target.value)}
           />
           <textarea
-            className="bg-white/10 rounded-lg flex items-center justify-center h-40 p-2 text-white/50 text-end"
+            dir="rtl"
+            className="bg-white/10 rounded-lg flex items-center justify-center h-40 p-2 text-white/50"
             name="title"
             placeholder="ביו"
             value={profileForm.description}
@@ -131,6 +135,7 @@ export default function ProfileForm(props: ProfileFormProps) {
           <TabsEdit
             tabs={profileForm.tabs}
             onTabActivityToggled={onTabActivityToggled}
+            onProductsClick={props.onProductsLinkClick}
           />
         </div>
 

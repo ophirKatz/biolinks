@@ -14,6 +14,9 @@ html {
     --btn-background-hover: 200 10% 89%;
     --foreground: 200 50% 3%;
     --foreground-dark: 240 100% 5%;
+    --c1: #191b33;
+    --c2: #00021d;
+    --c3: #4c4d60;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -24,6 +27,8 @@ html {
       --btn-background-hover: 200 10% 12%;
       --foreground: 200 20% 96%;
       --foreground-dark: 240 100% 5%;
+      --c1: #191b33;
+      --c2: #00021d;
     }
   }
 }
@@ -36,6 +41,24 @@ html {
 
 .flex-2 {
   flex: 2;
+}
+
+.c1 {
+  background-color: var(--c1);
+}
+.c2 {
+  background-color: var(--c2);
+}
+.c3 {
+  background-color: var(--c3);
+}
+.border-c3 {
+  border-color: var(--c3);
+}
+
+.tag {
+  margin-top: -8px;
+  margin-right: -8px;
 }
 
 textarea {
