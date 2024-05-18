@@ -1,15 +1,11 @@
 import { UserProductModel, UserProfileModel } from "@/models/UserProfile";
 import React, { useEffect, useMemo, useState } from "react";
 
-type ProductEditModel = UserProductModel & {
-  isExpanded: boolean;
-  isRemoved: boolean;
-};
-
 type ProductEditBoxProps = {
-  product: ProductEditModel;
+  product: UserProductModel;
+  isExpanded: boolean;
   onClick: () => void;
-  onSave: (product: ProductEditModel) => void;
+  onSave: (product: UserProductModel) => void;
   onRemove: () => void;
 };
 
@@ -21,12 +17,10 @@ function ProductEditBox(props: ProductEditBoxProps) {
   }, [product]);
 
   const updateProduct = (changes: Partial<UserProductModel>) => {
-    console.log("changes", changes);
     setProduct({
       ...product,
       ...changes,
     });
-    console.log("Changed product: ", product);
   };
 
   return (
@@ -37,7 +31,7 @@ function ProductEditBox(props: ProductEditBoxProps) {
       >
         {title}
       </div>
-      {props.product.isExpanded ? (
+      {props.isExpanded ? (
         <div className="flex flex-col px-4 gap-4">
           <div className="w-full flex flex-col gap-2">
             <label className="text-md mt-2 text-end mr-4">כותרת</label>
@@ -111,48 +105,31 @@ export type ProductsFormProps = {
   profile: UserProfileModel;
   onUpdate: (products: UserProductModel[]) => void;
   onBack: () => void;
-  onSave: () => void;
+  onSave: (products: UserProductModel[]) => void;
 };
 
 export default function ProductsForm(props: ProductsFormProps) {
-  const [products, setProducts] = useState<ProductEditModel[]>(
-    props.profile.products.map((p, i) => {
-      return {
-        ...p,
-        isExpanded: props.profile.products.length - 1 === i,
-        isRemoved: false,
-      };
-    })
+  const [products, setProducts] = useState<UserProductModel[]>(
+    props.profile.products
+  );
+  const [isExpanded, setIsExpanded] = useState(
+    props.profile.products.map(
+      (p, i) => props.profile.products.length - 1 === i
+    )
   );
 
-  const onSaveProduct = (product: ProductEditModel, index: number) => {
+  const onSaveProduct = (product: UserProductModel, index: number) => {
     setProducts(products.map((p, i) => (i === index ? product : p)));
+    setIsExpanded(isExpanded.map((p, i) => (i === index ? false : p)));
   };
 
   const onRemoveProduct = (index: number) => {
-    setProducts(
-      products.map((p, i) =>
-        i === index
-          ? {
-              ...p,
-              isRemoved: true,
-            }
-          : p
-      )
-    );
+    setProducts(products.filter((p, i) => i !== index));
+    setIsExpanded(isExpanded.filter((p, i) => i !== index));
   };
 
   const onProductBoxClick = (index: number) => {
-    setProducts(
-      products.map((p, i) =>
-        i === index
-          ? {
-              ...p,
-              isExpanded: !p.isExpanded,
-            }
-          : p
-      )
-    );
+    setIsExpanded(isExpanded.map((b, i) => (i === index ? !b : b)));
   };
 
   const onAddNewProduct = () => {
@@ -164,22 +141,17 @@ export default function ProductsForm(props: ProductsFormProps) {
         title: "",
         description: "",
         url: "",
-        isExpanded: true,
-        isRemoved: false,
       },
     ]);
+    setIsExpanded([...isExpanded.map((_) => false), true]);
   };
 
   const saveProducts = () => {
-    const productsUpdate: UserProductModel[] = products.map((p) => {
-      const { isExpanded, ...product } = p;
-      return product;
-    });
-    props.onSave();
+    props.onSave(products);
   };
 
   useEffect(() => {
-    if (props.profile.products.length === 0) {
+    if (products.length === 0) {
       setTimeout(() => onAddNewProduct(), 200);
     }
     return () => {};
@@ -191,17 +163,16 @@ export default function ProductsForm(props: ProductsFormProps) {
 
       <div className="flex flex-col w-full justify-center text-foreground gap-4">
         <div className="flex flex-col gap-4 px-8">
-          {products
-            .filter((p) => !p.isRemoved)
-            .map((product, index) => (
-              <ProductEditBox
-                key={index}
-                product={product}
-                onClick={() => onProductBoxClick(index)}
-                onSave={(p) => onSaveProduct(p, index)}
-                onRemove={() => onRemoveProduct(index)}
-              />
-            ))}
+          {products.map((product, index) => (
+            <ProductEditBox
+              key={index}
+              product={product}
+              isExpanded={isExpanded[index]}
+              onClick={() => onProductBoxClick(index)}
+              onSave={(p) => onSaveProduct(p, index)}
+              onRemove={() => onRemoveProduct(index)}
+            />
+          ))}
           <button
             className="h-16 rounded-md border bg-white/10 flex items-center justify-center text-white/50 text-lg"
             onClick={onAddNewProduct}

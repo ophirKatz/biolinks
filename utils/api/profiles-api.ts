@@ -1,32 +1,14 @@
-import {
-  UserChannelModel,
-  UserCouponModel,
-  UserProductModel,
-  UserProfileModel,
-  UserTabModel,
-} from "@/models/UserProfile";
+import { UserProductModel, UserProfileModel } from "@/models/UserProfile";
 import { createClient } from "../supabase/server";
 
-export type SaveUserProfileModel = {
-  username: string;
-  title: string;
-  description: string;
-  cover_photo1_url?: string;
-  cover_photo2_url?: string;
-  cover_photo3_url?: string;
-  tabs: UserTabModel[];
-  channels: UserChannelModel[];
-  coupons: UserCouponModel[];
-  products: UserProductModel[];
-  productsToRemove: UserProductModel[];
-};
-
 export async function saveUserProfile(
-  userProfile: Omit<UserProfileModel, "id">
+  userProfile: Omit<UserProfileModel, "id">,
+  originalProfile: Omit<UserProfileModel, "id">
 ) {
   const supabase = createClient();
 
   const { tabs, channels, coupons, products, ...profile } = userProfile;
+  const { products: originalProducts } = originalProfile;
 
   const getUserResult = await supabase.auth.getUser();
   const userId = getUserResult.data.user!.id;
@@ -44,20 +26,20 @@ export async function saveUserProfile(
   }
 
   console.log("updating tabs", tabs);
-  const { error: tabsUpdateError } = await supabase
-    .from("tabs")
-    .upsert(tabs)
-    .select();
+  const { error: tabsUpdateError } = await supabase.from("tabs").upsert(tabs);
 
   if (tabsUpdateError) {
     console.error(tabsUpdateError);
     return;
   }
 
-  await saveUserProducts(products);
+  await saveUserProducts(products, originalProducts);
 }
 
-export async function saveUserProducts(products: UserProductModel[]) {
+export async function saveUserProducts(
+  products: UserProductModel[],
+  originalProducts: UserProductModel[]
+) {
   const supabase = createClient();
 
   const productsToUpdate = products.filter((p) => p.id !== "");
@@ -67,6 +49,11 @@ export async function saveUserProducts(products: UserProductModel[]) {
       const { id, user_id, ...p_t } = p;
       return p_t;
     });
+  const productsToRemove = originalProducts
+    .filter((o) => !products.some((p) => p.id === o.id))
+    .map((p) => p.id);
+
+  console.log("removing products", productsToRemove);
 
   const { error: productsInsertError } = await supabase
     .from("products")
@@ -86,6 +73,22 @@ export async function saveUserProducts(products: UserProductModel[]) {
       "product update error",
       productsUpdateError,
       productsToUpdate
+    );
+    return;
+  }
+
+  const { data: removedProducts, error: productsRemoveError } = await supabase
+    .from("products")
+    .delete()
+    .in("id", productsToRemove)
+    .select();
+  console.log("removed products", removedProducts);
+
+  if (productsRemoveError) {
+    console.error(
+      "product remove error",
+      productsRemoveError,
+      productsToRemove
     );
     return;
   }

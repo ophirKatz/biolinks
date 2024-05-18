@@ -65,12 +65,26 @@ export default function ProfileContainer(props: ProfileContainerProps) {
       products,
     });
 
-  const saveProducts = () => {
+  const saveProducts = (products: UserProductModel[]) => {
+    console.log("saving products...", products);
+    setProfile({
+      ...profile,
+      tabs: profile.tabs.map((t) =>
+        t.type === TabType.Products
+          ? {
+              ...t,
+              count: products.length,
+            }
+          : t
+      ),
+      products,
+    });
     setMode(ProfilePageMode.ProfileForm);
+    console.log("profile after save products", profile);
   };
 
   // Actions
-  const onProfileFormSave = () => submitProfileAction(profile);
+  const onProfileFormSave = () => submitProfileAction(profile, originalProfile);
 
   return (
     <>
@@ -85,7 +99,7 @@ export default function ProfileContainer(props: ProfileContainerProps) {
       )}
       {mode === ProfilePageMode.ProfileForm ? (
         <ProfileForm
-          profile={props.profile}
+          profile={profile}
           onUpdate={onProfileFormUpdate}
           onPreview={goToPreview}
           onSave={onProfileFormSave}
@@ -96,7 +110,7 @@ export default function ProfileContainer(props: ProfileContainerProps) {
       )}
       {mode === ProfilePageMode.ProductsForm ? (
         <ProductsForm
-          profile={props.profile}
+          profile={profile}
           onUpdate={onProductsFormUpdate}
           onBack={goBackToProfileForm}
           onSave={saveProducts}
