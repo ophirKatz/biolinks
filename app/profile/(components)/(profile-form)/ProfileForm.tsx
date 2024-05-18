@@ -7,67 +7,66 @@ import Channels from "./EditChannels";
 import TabsEdit from "./TabsEdit";
 import UsernameInput from "./UsernameInput";
 import { DebounceInput } from "react-debounce-input";
-import submitProfileAction from "../../(actions)/submit-profile.action";
 import { UserProfileModel } from "@/models/UserProfile";
 import Link from "next/link";
 
 export type ProfileFormProps = {
   profile: UserProfileModel;
-  onPreview: (profile: UserProfileModel) => void;
-  onSave: (profile: UserProfileModel) => void;
+  onPreview: () => void;
+  onSave: () => void;
+  onUpdate: (profile: UserProfileModel) => void;
   onProductsLinkClick: () => void;
   className?: string;
 };
 
 export default function ProfileForm(props: ProfileFormProps) {
-  const [profileForm, setProfileForm] = useState<UserProfileModel>({
+  const [profile, setProfile] = useState<UserProfileModel>({
     ...props.profile,
   });
 
-  console.log("got profile form", props.profile);
-
   const onUsernameChange = (username: string) => {
-    setProfileForm({
-      ...profileForm,
+    setProfile({
+      ...profile,
       username,
     });
+    props.onUpdate(profile);
   };
 
   const onTitleChange = (title: string) => {
-    setProfileForm({
-      ...profileForm,
+    setProfile({
+      ...profile,
       title,
     });
+    props.onUpdate(profile);
   };
 
   const onDescriptionChange = (description: string) => {
-    setProfileForm({
-      ...profileForm,
+    setProfile({
+      ...profile,
       description,
     });
+    props.onUpdate(profile);
   };
 
   const onPhotoSelected = (index: number, filePath: string) => {
-    setProfileForm({
-      ...profileForm,
-      cover_photo1_url: index === 0 ? filePath : profileForm.cover_photo1_url,
-      cover_photo2_url: index === 1 ? filePath : profileForm.cover_photo2_url,
-      cover_photo3_url: index === 2 ? filePath : profileForm.cover_photo3_url,
+    setProfile({
+      ...profile,
+      cover_photo1_url: index === 0 ? filePath : profile.cover_photo1_url,
+      cover_photo2_url: index === 1 ? filePath : profile.cover_photo2_url,
+      cover_photo3_url: index === 2 ? filePath : profile.cover_photo3_url,
     });
-    console.log("profileForm", profileForm, filePath, index);
+    props.onUpdate(profile);
   };
 
   const onTabActivityToggled = (index: number) => {
-    setProfileForm({
-      ...profileForm,
-      tabs: profileForm.tabs.map((t, i) => {
+    setProfile({
+      ...profile,
+      tabs: profile.tabs.map((t, i) => {
         return i === index ? { ...t, is_active: !t.is_active } : t;
       }),
     });
-    console.log("Setting tab activity", index, profileForm.tabs);
+    props.onUpdate(profile);
   };
-
-  const onSaveForm = () => props.onSave(profileForm);
 
   return (
     <div
@@ -80,20 +79,10 @@ export default function ProfileForm(props: ProfileFormProps) {
         <span className="text-xl">Welcome to BioLinks!</span>
       </Link>
       <span className="text-lg text-gray-400">Let's link that bio</span>
-      {/* {searchParams.code ? (
-          <span className="text-md text-red-600">
-            {getSearchParamsMessage(searchParams.code)}
-          </span>
-        ) : (
-          <></>
-        )} */}
 
       <form className="flex flex-col w-full justify-center text-foreground gap-4">
         <div className="flex flex-col gap-4 px-8">
-          <UsernameInput
-            value={profileForm.username}
-            onChange={onUsernameChange}
-          />
+          <UsernameInput value={profile.username} onChange={onUsernameChange} />
 
           <label className="text-md mt-2 text-end">ביו</label>
           <DebounceInput
@@ -106,7 +95,7 @@ export default function ProfileForm(props: ProfileFormProps) {
             autoCorrect="false"
             required
             debounceTimeout={500}
-            value={profileForm.title}
+            value={profile.title}
             onChange={(e) => onTitleChange(e.target.value)}
           />
           <textarea
@@ -114,16 +103,16 @@ export default function ProfileForm(props: ProfileFormProps) {
             className="bg-white/10 rounded-lg flex items-center justify-center h-40 p-2 text-white/50"
             name="title"
             placeholder="ביו"
-            value={profileForm.description}
+            value={profile.description}
             onChange={(e) => onDescriptionChange(e.target.value)}
           />
 
           <label className="text-md mt-2 text-end">תמונות רקע</label>
           <CoverPhotos
             urls={[
-              profileForm.cover_photo1_url,
-              profileForm.cover_photo2_url,
-              profileForm.cover_photo3_url,
+              profile.cover_photo1_url,
+              profile.cover_photo2_url,
+              profile.cover_photo3_url,
             ]}
             onPhotoSelected={onPhotoSelected}
           />
@@ -133,7 +122,7 @@ export default function ProfileForm(props: ProfileFormProps) {
 
           <label className="text-md mt-2 text-end">טאבים וקישורים</label>
           <TabsEdit
-            tabs={profileForm.tabs}
+            tabs={profile.tabs}
             onTabActivityToggled={onTabActivityToggled}
             onProductsClick={props.onProductsLinkClick}
           />
@@ -141,7 +130,7 @@ export default function ProfileForm(props: ProfileFormProps) {
 
         <div className="border-t h-16 w-full flex mt-16">
           <SubmitButton
-            formAction={onSaveForm}
+            formAction={props.onSave}
             className="flex-1 w-full h-full flex justify-center items-center text-lg font-bold"
             type="button"
             pendingText="Saving..."
@@ -151,7 +140,7 @@ export default function ProfileForm(props: ProfileFormProps) {
           <button
             className="flex-1 w-full h-full flex justify-center items-center text-lg font-bold"
             type="button"
-            onClick={() => props.onPreview(profileForm)}
+            onClick={props.onPreview}
           >
             Preview
           </button>

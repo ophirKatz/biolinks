@@ -1,5 +1,25 @@
-import { UserProductModel, UserProfileModel } from "@/models/UserProfile";
+import {
+  UserChannelModel,
+  UserCouponModel,
+  UserProductModel,
+  UserProfileModel,
+  UserTabModel,
+} from "@/models/UserProfile";
 import { createClient } from "../supabase/server";
+
+export type SaveUserProfileModel = {
+  username: string;
+  title: string;
+  description: string;
+  cover_photo1_url?: string;
+  cover_photo2_url?: string;
+  cover_photo3_url?: string;
+  tabs: UserTabModel[];
+  channels: UserChannelModel[];
+  coupons: UserCouponModel[];
+  products: UserProductModel[];
+  productsToRemove: UserProductModel[];
+};
 
 export async function saveUserProfile(
   userProfile: Omit<UserProfileModel, "id">
@@ -40,8 +60,6 @@ export async function saveUserProfile(
 export async function saveUserProducts(products: UserProductModel[]) {
   const supabase = createClient();
 
-  console.log("updating products", products);
-
   const productsToUpdate = products.filter((p) => p.id !== "");
   const productsToAdd = products
     .filter((p) => p.id === "")
@@ -49,9 +67,6 @@ export async function saveUserProducts(products: UserProductModel[]) {
       const { id, user_id, ...p_t } = p;
       return p_t;
     });
-
-  console.log("productsToUpdate", productsToUpdate);
-  console.log("productsToAdd", productsToAdd);
 
   const { error: productsInsertError } = await supabase
     .from("products")

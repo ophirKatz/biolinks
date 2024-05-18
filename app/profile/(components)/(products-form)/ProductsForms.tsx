@@ -109,8 +109,9 @@ function ProductEditBox(props: ProductEditBoxProps) {
 
 export type ProductsFormProps = {
   profile: UserProfileModel;
+  onUpdate: (products: UserProductModel[]) => void;
   onBack: () => void;
-  onSave: (products: UserProductModel[]) => void;
+  onSave: () => void;
 };
 
 export default function ProductsForm(props: ProductsFormProps) {
@@ -174,7 +175,7 @@ export default function ProductsForm(props: ProductsFormProps) {
       const { isExpanded, ...product } = p;
       return product;
     });
-    props.onSave(productsUpdate);
+    props.onSave();
   };
 
   useEffect(() => {
